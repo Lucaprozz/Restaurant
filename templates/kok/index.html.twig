@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Kok index{% endblock %}
+
+{% block body %}
+    <h1>Kok index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for kok in koks %}
+            <tr>
+                <td>{{ kok.id }}</td>
+                <td>
+                    <a href="{{ path('kok_show', {'id': kok.id}) }}">show</a>
+                    <a href="{{ path('kok_edit', {'id': kok.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('kok_new') }}">Create new</a>
+{% endblock %}

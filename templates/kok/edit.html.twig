@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Kok{% endblock %}
+
+{% block body %}
+    <h1>Edit Kok</h1>
+
+    {{ include('kok/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('kok_index') }}">back to list</a>
+
+    {{ include('kok/_delete_form.html.twig') }}
+{% endblock %}

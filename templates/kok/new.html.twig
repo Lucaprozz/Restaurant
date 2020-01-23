@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Kok{% endblock %}
+
+{% block body %}
+    <h1>Create new Kok</h1>
+
+    {{ include('kok/_form.html.twig') }}
+
+    <a href="{{ path('kok_index') }}">back to list</a>
+{% endblock %}
