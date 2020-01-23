@@ -44,14 +44,9 @@ class User extends BaseUser
             private $telnr;
 
             /**
-             * @ORM\Column(type="integer")
-             */
-            private $AantalPersonen;
-
-            /**
              * @ORM\OneToMany(targetEntity="App\Entity\Reservering", mappedBy="user")
              */
-            private $klants;
+            private $user;
 
             public function getLastActivity(): ?\DateTimeInterface
             {
@@ -97,45 +92,31 @@ class User extends BaseUser
                         return $this;
                     }
 
-
-
-                    public function getAantalPersonen(): ?int
-                    {
-                        return $this->AantalPersonen;
-                    }
-
-                    public function setAantalPersonen(int $AantalPersonen): self
-                    {
-                        $this->AantalPersonen = $AantalPersonen;
-
-                        return $this;
-                    }
-
                     /**
                      * @return Collection|Reservering[]
                      */
-                    public function getKlants(): Collection
+                    public function getUser(): Collection
                     {
-                        return $this->klants;
+                        return $this->user;
                     }
 
-                    public function addKlant(Reservering $klant): self
+                    public function addUser(Reservering $user): self
                     {
-                        if (!$this->klants->contains($klant)) {
-                            $this->klants[] = $klant;
-                            $klant->setUser($this);
+                        if (!$this->user->contains($user)) {
+                            $this->user[] = $user;
+                            $user->setUser($this);
                         }
 
                         return $this;
                     }
 
-                    public function removeKlant(Reservering $klant): self
+                    public function removeUser(Reservering $user): self
                     {
-                        if ($this->klants->contains($klant)) {
-                            $this->klants->removeElement($klant);
+                        if ($this->user->contains($user)) {
+                            $this->user->removeElement($user);
                             // set the owning side to null (unless already changed)
-                            if ($klant->getUser() === $this) {
-                                $klant->setUser(null);
+                            if ($user->getUser() === $this) {
+                                $user->setUser(null);
                             }
                         }
 

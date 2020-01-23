@@ -17,60 +17,110 @@ class Bestelling
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Reservering", inversedBy="datum")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Categorie", inversedBy="categorie")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Datum;
+    private $categorie;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Reservering", inversedBy="Tijd")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="string", length=30)
      */
-    private $Tijd;
+    private $Soort;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Reservering", inversedBy="tafel")
+     * @ORM\Column(type="string", length=30)
+     */
+    private $Naam;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $Aantal;
+
+    /**
+     * @ORM\Column(type="decimal", precision=5, scale=2)
+     */
+    private $Prijs;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Reservering", inversedBy="reservering")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Tafel;
+    private $reservering;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDatum(): ?Reservering
+    public function getCategorie(): ?Categorie
     {
-        return $this->Datum;
+        return $this->categorie;
     }
 
-    public function setDatum(?Reservering $Datum): self
+    public function setCategorie(?Categorie $categorie): self
     {
-        $this->Datum = $Datum;
+        $this->categorie = $categorie;
 
         return $this;
     }
 
-    public function getTijd(): ?Reservering
+    public function getSoort(): ?string
     {
-        return $this->Tijd;
+        return $this->Soort;
     }
 
-    public function setTijd(?Reservering $Tijd): self
+    public function setSoort(string $Soort): self
     {
-        $this->Tijd = $Tijd;
+        $this->Soort = $Soort;
 
         return $this;
     }
 
-    public function getTafel(): ?Reservering
+    public function getNaam(): ?string
     {
-        return $this->Tafel;
+        return $this->Naam;
     }
 
-    public function setTafel(?Reservering $Tafel): self
+    public function setNaam(string $Naam): self
     {
-        $this->Tafel = $Tafel;
+        $this->Naam = $Naam;
+
+        return $this;
+    }
+
+    public function getAantal(): ?int
+    {
+        return $this->Aantal;
+    }
+
+    public function setAantal(int $Aantal): self
+    {
+        $this->Aantal = $Aantal;
+
+        return $this;
+    }
+
+    public function getPrijs(): ?string
+    {
+        return $this->Prijs;
+    }
+
+    public function setPrijs(string $Prijs): self
+    {
+        $this->Prijs = $Prijs;
+
+        return $this;
+    }
+
+    public function getReservering(): ?Reservering
+    {
+        return $this->reservering;
+    }
+
+    public function setReservering(?Reservering $reservering): self
+    {
+        $this->reservering = $reservering;
 
         return $this;
     }
