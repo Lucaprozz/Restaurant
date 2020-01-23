@@ -23,8 +23,7 @@ class User extends BaseUser
     public function __construct()
     {
         parent::__construct();
-        $this->user = new ArrayCollection();
-        $this->klants = new ArrayCollection();
+        $this->User = new ArrayCollection();
         // your own logic
     }
 
@@ -46,7 +45,7 @@ class User extends BaseUser
             /**
              * @ORM\OneToMany(targetEntity="App\Entity\Reservering", mappedBy="user")
              */
-            private $user;
+            private $User;
 
             public function getLastActivity(): ?\DateTimeInterface
             {
@@ -73,7 +72,7 @@ class User extends BaseUser
                     return $this->name;
                 }
 
-                public function setName(string $firstname): self
+                public function setName(string $name): self
                 {
                     $this->name = $name;
 
@@ -97,13 +96,13 @@ class User extends BaseUser
                      */
                     public function getUser(): Collection
                     {
-                        return $this->user;
+                        return $this->User;
                     }
 
                     public function addUser(Reservering $user): self
                     {
-                        if (!$this->user->contains($user)) {
-                            $this->user[] = $user;
+                        if (!$this->User->contains($user)) {
+                            $this->User[] = $user;
                             $user->setUser($this);
                         }
 
@@ -112,8 +111,8 @@ class User extends BaseUser
 
                     public function removeUser(Reservering $user): self
                     {
-                        if ($this->user->contains($user)) {
-                            $this->user->removeElement($user);
+                        if ($this->User->contains($user)) {
+                            $this->User->removeElement($user);
                             // set the owning side to null (unless already changed)
                             if ($user->getUser() === $this) {
                                 $user->setUser(null);

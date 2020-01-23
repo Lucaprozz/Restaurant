@@ -19,12 +19,8 @@ class Reservering
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
-     */
-    private $datum_tijd;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="user")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="User")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $user;
 
@@ -35,42 +31,23 @@ class Reservering
     private $tafel;
 
     /**
+     * @ORM\Column(type="datetime")
+     */
+    private $datum_tijd;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Bestelling", mappedBy="reservering")
      */
     private $reservering;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Barman", mappedBy="reservering")
-     */
-    private $reserveren;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Kok", mappedBy="reservering")
-     */
-    private $resereveren;
-
     public function __construct()
     {
         $this->reservering = new ArrayCollection();
-        $this->reserveren = new ArrayCollection();
-        $this->resereveren = new ArrayCollection();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getDatumTijd(): ?\DateTimeInterface
-    {
-        return $this->datum_tijd;
-    }
-
-    public function setDatumTijd(\DateTimeInterface $datum_tijd): self
-    {
-        $this->datum_tijd = $datum_tijd;
-
-        return $this;
     }
 
     public function getUser(): ?User
@@ -93,6 +70,18 @@ class Reservering
     public function setTafel(?Tafel $tafel): self
     {
         $this->tafel = $tafel;
+
+        return $this;
+    }
+
+    public function getDatumTijd(): ?\DateTimeInterface
+    {
+        return $this->datum_tijd;
+    }
+
+    public function setDatumTijd(\DateTimeInterface $datum_tijd): self
+    {
+        $this->datum_tijd = $datum_tijd;
 
         return $this;
     }
@@ -122,68 +111,6 @@ class Reservering
             // set the owning side to null (unless already changed)
             if ($reservering->getReservering() === $this) {
                 $reservering->setReservering(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Barman[]
-     */
-    public function getReserveren(): Collection
-    {
-        return $this->reserveren;
-    }
-
-    public function addReserveren(Barman $reserveren): self
-    {
-        if (!$this->reserveren->contains($reserveren)) {
-            $this->reserveren[] = $reserveren;
-            $reserveren->setReservering($this);
-        }
-
-        return $this;
-    }
-
-    public function removeReserveren(Barman $reserveren): self
-    {
-        if ($this->reserveren->contains($reserveren)) {
-            $this->reserveren->removeElement($reserveren);
-            // set the owning side to null (unless already changed)
-            if ($reserveren->getReservering() === $this) {
-                $reserveren->setReservering(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Kok[]
-     */
-    public function getResereveren(): Collection
-    {
-        return $this->resereveren;
-    }
-
-    public function addResereveren(Kok $resereveren): self
-    {
-        if (!$this->resereveren->contains($resereveren)) {
-            $this->resereveren[] = $resereveren;
-            $resereveren->setReservering($this);
-        }
-
-        return $this;
-    }
-
-    public function removeResereveren(Kok $resereveren): self
-    {
-        if ($this->resereveren->contains($resereveren)) {
-            $this->resereveren->removeElement($resereveren);
-            // set the owning side to null (unless already changed)
-            if ($resereveren->getReservering() === $this) {
-                $resereveren->setReservering(null);
             }
         }
 

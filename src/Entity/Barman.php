@@ -17,24 +17,24 @@ class Barman
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Reservering", inversedBy="reserveren")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Bestelling", inversedBy="bestelling")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $reservering;
+    private $bestelling;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getReservering(): ?Reservering
+    public function getBestelling(): ?Bestelling
     {
-        return $this->reservering;
+        return $this->bestelling;
     }
 
-    public function setReservering(?Reservering $reservering): self
+    public function setBestelling(?Bestelling $bestelling): self
     {
-        $this->reservering = $reservering;
+        $this->bestelling = $bestelling;
 
         return $this;
     }

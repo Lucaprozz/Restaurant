@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -17,20 +19,10 @@ class Bestelling
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Categorie", inversedBy="categorie")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Menu", inversedBy="menu")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $categorie;
-
-    /**
-     * @ORM\Column(type="string", length=30)
-     */
-    private $Soort;
-
-    /**
-     * @ORM\Column(type="string", length=30)
-     */
-    private $Naam;
+    private $menusoort;
 
     /**
      * @ORM\Column(type="integer")
@@ -48,43 +40,35 @@ class Bestelling
      */
     private $reservering;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Barman", mappedBy="bestelling")
+     */
+    private $bestelling;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Kok", mappedBy="bestelling")
+     */
+    private $besteldin;
+
+    public function __construct()
+    {
+        $this->bestelling = new ArrayCollection();
+        $this->besteldin = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCategorie(): ?Categorie
+    public function getMenusoort(): ?Menu
     {
-        return $this->categorie;
+        return $this->menusoort;
     }
 
-    public function setCategorie(?Categorie $categorie): self
+    public function setMenusoort(?Menu $menusoort): self
     {
-        $this->categorie = $categorie;
-
-        return $this;
-    }
-
-    public function getSoort(): ?string
-    {
-        return $this->Soort;
-    }
-
-    public function setSoort(string $Soort): self
-    {
-        $this->Soort = $Soort;
-
-        return $this;
-    }
-
-    public function getNaam(): ?string
-    {
-        return $this->Naam;
-    }
-
-    public function setNaam(string $Naam): self
-    {
-        $this->Naam = $Naam;
+        $this->menusoort = $menusoort;
 
         return $this;
     }
@@ -121,6 +105,68 @@ class Bestelling
     public function setReservering(?Reservering $reservering): self
     {
         $this->reservering = $reservering;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Barman[]
+     */
+    public function getBestelling(): Collection
+    {
+        return $this->bestelling;
+    }
+
+    public function addBestelling(Barman $bestelling): self
+    {
+        if (!$this->bestelling->contains($bestelling)) {
+            $this->bestelling[] = $bestelling;
+            $bestelling->setBestelling($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBestelling(Barman $bestelling): self
+    {
+        if ($this->bestelling->contains($bestelling)) {
+            $this->bestelling->removeElement($bestelling);
+            // set the owning side to null (unless already changed)
+            if ($bestelling->getBestelling() === $this) {
+                $bestelling->setBestelling(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Kok[]
+     */
+    public function getBesteldin(): Collection
+    {
+        return $this->besteldin;
+    }
+
+    public function addBesteldin(Kok $besteldin): self
+    {
+        if (!$this->besteldin->contains($besteldin)) {
+            $this->besteldin[] = $besteldin;
+            $besteldin->setBestelling($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBesteldin(Kok $besteldin): self
+    {
+        if ($this->besteldin->contains($besteldin)) {
+            $this->besteldin->removeElement($besteldin);
+            // set the owning side to null (unless already changed)
+            if ($besteldin->getBestelling() === $this) {
+                $besteldin->setBestelling(null);
+            }
+        }
 
         return $this;
     }

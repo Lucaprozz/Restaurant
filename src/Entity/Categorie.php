@@ -24,7 +24,7 @@ class Categorie
     private $Soort;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Bestelling", mappedBy="categorie")
+     * @ORM\OneToMany(targetEntity="App\Entity\Menu", mappedBy="categorie")
      */
     private $categorie;
 
@@ -51,14 +51,14 @@ class Categorie
     }
 
     /**
-     * @return Collection|Bestelling[]
+     * @return Collection|Menu[]
      */
     public function getCategorie(): Collection
     {
         return $this->categorie;
     }
 
-    public function addCategorie(Bestelling $categorie): self
+    public function addCategorie(Menu $categorie): self
     {
         if (!$this->categorie->contains($categorie)) {
             $this->categorie[] = $categorie;
@@ -68,7 +68,7 @@ class Categorie
         return $this;
     }
 
-    public function removeCategorie(Bestelling $categorie): self
+    public function removeCategorie(Menu $categorie): self
     {
         if ($this->categorie->contains($categorie)) {
             $this->categorie->removeElement($categorie);

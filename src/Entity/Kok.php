@@ -17,24 +17,23 @@ class Kok
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Reservering", inversedBy="resereveren")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Bestelling", inversedBy="besteldin")
      */
-    private $reservering;
+    private $bestelling;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getReservering(): ?Reservering
+    public function getBestelling(): ?Bestelling
     {
-        return $this->reservering;
+        return $this->bestelling;
     }
 
-    public function setReservering(?Reservering $reservering): self
+    public function setBestelling(?Bestelling $bestelling): self
     {
-        $this->reservering = $reservering;
+        $this->bestelling = $bestelling;
 
         return $this;
     }
